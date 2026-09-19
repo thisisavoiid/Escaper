@@ -7,10 +7,10 @@ void Action::Invoke()
 		event->Invoke();
 }
 
-Action::Action(std::string name, ActionEvent* event)
+Action::Action(std::string name, std::shared_ptr<ActionEvent> event)
 {
-	this->name = name;
-	this->event = event;
+	this->name = std::move(name);
+	this->event = std::move(event);
 }
 
 //Action::~Action()

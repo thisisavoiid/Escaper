@@ -2,8 +2,8 @@
 
 Area::Area(std::string name, std::vector<Action> actions)
 {
-	this->name = name;
-	this->actions = actions;
+	this->name = std::move(name);
+	this->actions = std::move(actions);
 }
 
 //Area::~Area()

@@ -13,8 +13,12 @@ TextAdventureGame::~TextAdventureGame()
 void TextAdventureGame::Run()
 {
 	RoomManager::CreateRooms();
-	auto rooms = RoomManager::GetRooms();
-	RoomManager::ChangeRoom(rooms[0]);
+	auto& rooms = RoomManager::GetRooms();
+
+	if (rooms.empty())
+		return;
+
+	RoomManager::ChangeRoom(rooms[0].get());
 
 	RefreshOptions();
 

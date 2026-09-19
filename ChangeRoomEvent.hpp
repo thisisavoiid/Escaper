@@ -2,6 +2,7 @@
 
 #include "ActionEvent.hpp"
 #include "Room.hpp"
+#include <memory>
 
 class ChangeRoomEvent : public ActionEvent {
 public:

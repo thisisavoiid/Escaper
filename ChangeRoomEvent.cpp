@@ -9,5 +9,8 @@ ChangeRoomEvent::ChangeRoomEvent(Room* targetRoom)
 
 void ChangeRoomEvent::Invoke()
 {
+	if (!target)
+		return;
+
 	RoomManager::ChangeRoom(target);
 }
