@@ -9,10 +9,8 @@ std::vector<Room*> RoomManager::rooms;
 void RoomManager::ChangeRoom(Room* room)
 {
 	RoomManager::ActiveRoom = room;
-	
-	int areaCount = sizeof(room->areas) / sizeof(room->areas[0]);
 
-	if (areaCount < 1)
+	if (room->areas.size() < 1)
 		return;
 
 	RoomManager::ActiveArea = &room->areas[0];
