@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Escaper.vcxproj" Id="d9fa3364-c068-4788-b676-bfef91dac3b3" />
+</Solution>
