@@ -14,3 +14,8 @@ void ChangeRoomEvent::Invoke()
 
 	RoomManager::ChangeRoom(target);
 }
+
+bool ChangeRoomEvent::IsAllowed()
+{
+	return (target != nullptr);
+}

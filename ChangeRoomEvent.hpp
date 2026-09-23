@@ -9,4 +9,5 @@ public:
 	Room* target = nullptr;
 	ChangeRoomEvent(Room* targetRoom);
 	void Invoke() override;
+	bool IsAllowed() override;
 };

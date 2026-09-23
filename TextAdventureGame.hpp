@@ -26,6 +26,7 @@ private:
 	SelectionState selectionState = SelectionState::Area;
 
 	std::vector<std::string> options;
+	std::vector<bool> optionsAvailable;
 
 	int selection = 0;
 
@@ -34,4 +35,5 @@ private:
 	void GoBack();
 	
 	Element RenderRoomSection();
+	Element RenderInventorySection();
 };
