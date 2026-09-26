@@ -23,7 +23,6 @@
     <ClCompile Include="Area.cpp" />
     <ClCompile Include="ChangeRoomEvent.cpp" />
     <ClCompile Include="ConsumeItemEvent.cpp" />
-    <ClCompile Include="ConsumeItemEvent.hpp" />
     <ClCompile Include="InventoryManager.cpp" />
     <ClCompile Include="ItemLibrary.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -37,6 +36,7 @@
     <ClInclude Include="ActionEvent.hpp" />
     <ClInclude Include="Area.hpp" />
     <ClInclude Include="ChangeRoomEvent.hpp" />
+    <ClInclude Include="ConsumeItemEvent.hpp" />
     <ClInclude Include="InventoryManager.hpp" />
     <ClInclude Include="ItemData.hpp" />
     <ClInclude Include="ItemKey.hpp" />
