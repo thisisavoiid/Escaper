@@ -1,6 +1,8 @@
 #include "RoomManager.hpp"
 #include "ChangeRoomEvent.hpp"
 #include "PickupItemEvent.hpp"	
+#include "NarrativeAddEvent.hpp"
+#include "NarrativeClearEvent.hpp"
 #include "ConsumeItemEvent.hpp"
 #include <memory>
 #include <iostream>
@@ -36,31 +38,90 @@ std::vector<std::unique_ptr<Room>>& RoomManager::GetRooms()
 
 void RoomManager::CreateRooms()
 {
-	auto livingRoom = std::make_unique<Room>("Living Room", "A cozy living room with an eerie atmosphere.", std::vector<Area>{});
+	auto suiteRoom = std::make_unique<Room>("Suite 217", "Lorem ipsum...", std::vector<Area>{});
+	auto corridorRoom = std::make_unique<Room>("Corridor", "Lorem Ipsum", std::vector<Area>{});
 
-	Room* livingRoomRawPtr = livingRoom.get();
+	Room* suiteRoomRawPtr = suiteRoom.get();
+	Room* corridorRoomRawPtr = corridorRoom.get();
 
-	livingRoom->AddArea(
+#pragma region SUITE ROOM
+	suiteRoom->AddArea(
 		Area(
-			"Test Area",
+			"Broken Mirror",
 			std::vector<Action> {
-				{Action("Gain Treasure!", std::make_shared<PickupItemEvent>(ItemKey::Treasure_01))},
-				{ Action("Gain Key!", std::make_shared<PickupItemEvent>(ItemKey::Key_01)) },
-				{ Action(
-					"Test multiple items needed!",
-					std::vector<std::shared_ptr<ActionEvent>> {
-						{std::make_shared<ConsumeItemEvent>(ItemKey::Treasure_01)},
-						{std::make_shared<ConsumeItemEvent>(ItemKey::Key_01)}
-					},
-					std::vector<ItemKey> {
-						{ItemKey::Treasure_01}, {ItemKey::Key_01}
-					}
-				)
-				}
+
 			}
 		)
 	);
 
+	suiteRoom->AddArea(
+		Area(
+			"Bedside Table",
+			std::vector<Action> {
 
-	rooms.push_back(std::move(livingRoom));
+	}
+		)
+	);
+
+	suiteRoom->AddArea(
+		Area(
+			"Corridor door",
+			std::vector<Action> {
+				{Action("Enter corridor", std::make_shared<ChangeRoomEvent>(corridorRoomRawPtr))}
+		}
+		)
+	);
+#pragma endregion
+
+#pragma region CORRIDOR
+
+	corridorRoom->AddArea(
+		Area(
+			"Bathroom door",
+			std::vector<Action> {
+
+	}
+		)
+	);
+
+	corridorRoom->AddArea(
+		Area(
+			"Kitchen door",
+			std::vector<Action> {
+
+	}
+		)
+	);
+
+	corridorRoom->AddArea(
+		Area( 
+			"Library door", 
+			std::vector<Action> {
+
+	}
+		)
+	);
+
+	corridorRoom->AddArea(
+		Area(
+			"Basement door",
+			std::vector<Action> {
+
+	}
+		)
+	);
+
+	corridorRoom->AddArea(
+		Area(
+			"Suite 217 door",
+			std::vector<Action> {
+		{Action("Enter Suite 217", std::make_shared<ChangeRoomEvent>(suiteRoomRawPtr))}
+	}
+		)
+	);
+
+#pragma endregion
+
+	rooms.push_back(std::move(suiteRoom));
+	rooms.push_back(std::move(corridorRoom));
 }

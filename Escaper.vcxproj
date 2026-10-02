@@ -26,6 +26,10 @@
     <ClCompile Include="InventoryManager.cpp" />
     <ClCompile Include="ItemLibrary.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="NarrativeAddEvent.cpp" />
+    <ClCompile Include="NarrativeClearEvent.cpp" />
+    <ClCompile Include="NarrativeManager.cpp" />
+    <ClCompile Include="NarrativeSetEvent.cpp" />
     <ClCompile Include="PickupItemEvent.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomManager.cpp" />
@@ -37,10 +41,14 @@
     <ClInclude Include="Area.hpp" />
     <ClInclude Include="ChangeRoomEvent.hpp" />
     <ClInclude Include="ConsumeItemEvent.hpp" />
+    <ClInclude Include="NarrativeAddEvent.hpp" />
+    <ClInclude Include="NarrativeClearEvent.hpp" />
+    <ClInclude Include="NarrativeManager.hpp" />
     <ClInclude Include="InventoryManager.hpp" />
     <ClInclude Include="ItemData.hpp" />
     <ClInclude Include="ItemKey.hpp" />
     <ClInclude Include="ItemLibrary.hpp" />
+    <ClInclude Include="NarrativeSetEvent.hpp" />
     <ClInclude Include="PickupItemEvent.hpp" />
     <ClInclude Include="Room.hpp" />
     <ClInclude Include="RoomManager.hpp" />

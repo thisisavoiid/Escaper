@@ -45,10 +45,19 @@
     <ClCompile Include="PickupItemEvent.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="ConsumeItemEvent.hpp">
-      <Filter>Headerdateien</Filter>
-    </ClCompile>
     <ClCompile Include="ConsumeItemEvent.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="NarrativeManager.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="NarrativeClearEvent.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="NarrativeAddEvent.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="NarrativeSetEvent.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -90,6 +99,21 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="PickupItemEvent.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsumeItemEvent.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="NarrativeManager.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="NarrativeAddEvent.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="NarrativeSetEvent.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="NarrativeClearEvent.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

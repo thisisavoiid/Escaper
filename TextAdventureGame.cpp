@@ -2,6 +2,7 @@
 #include "ItemLibrary.hpp"
 #include "InventoryManager.hpp"
 #include "ItemData.hpp";
+#include "NarrativeManager.hpp"
 
 TextAdventureGame::TextAdventureGame()
 {
@@ -186,6 +187,8 @@ Element TextAdventureGame::RenderInventorySection()
 
 Element TextAdventureGame::RenderRoomSection()
 {
+	// OLD CODE
+	/* 
 	Room* activeRoom = RoomManager::ActiveRoom;
 	Area* activeArea = RoomManager::ActiveArea;
 
@@ -211,5 +214,23 @@ Element TextAdventureGame::RenderRoomSection()
 	) | size(HEIGHT, EQUAL, 25);
 
 	return roomWindow;
+	*/
+
+	std::vector<std::string> narrativeLog = NarrativeManager::GetLog();
+
+	Elements content;
+
+	for (const std::string& line : narrativeLog) {
+		content.push_back(
+			text(line) | dim | italic
+		);
+	}
+
+	Element narrativeWindow = window(
+		text("Narrative"),
+		vbox(std::move(content))
+	) | frame | size(HEIGHT, EQUAL, 25);
+
+	return narrativeWindow;
 }
 
