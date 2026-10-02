@@ -8,7 +8,9 @@ void NarrativeManager::Add(const std::string line)
 {
 	NarrativeManager::log.push_back(line);
 
-	//todo add buffer cap
+	if (NarrativeManager::log.size() > NarrativeManager::maxLines) {
+		NarrativeManager::log.erase(NarrativeManager::log.begin());
+	}
 }
 
 void NarrativeManager::Set(const std::vector<std::string> lines)

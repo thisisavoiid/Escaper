@@ -34,6 +34,6 @@ private:
 	void RefreshOptions();
 	void GoBack();
 	
-	Element RenderRoomSection();
+	Element RenderNarrativeSection();
 	Element RenderInventorySection();
 };

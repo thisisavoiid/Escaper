@@ -54,19 +54,19 @@ void TextAdventureGame::Run()
 		menuOption
 	);
 
-	Component roomRenderer = Renderer([&] {return RenderRoomSection();});
+	Component narrativeRenderer = Renderer([&] {return RenderNarrativeSection();});
 	Component inventoryRenderer = Renderer([&] {return RenderInventorySection();});
 
 	Component useButton = Button("PERFORM ACTION", [&] {ProcessSelection();}) | xflex;
 	Component backButton = Button("GO BACK", [&] {GoBack();}) | xflex;
 
 	Component topButtons = Container::Horizontal({ useButton, backButton }) | xflex;
-	Component rightColumn = Container::Vertical({ inventoryRenderer, topButtons, menu });
-	Component mainContainer = Container::Horizontal({ roomRenderer, rightColumn });
+	Component rightColumn = Container::Vertical({ inventoryRenderer | xflex, topButtons, menu });
+	Component mainContainer = Container::Horizontal({ narrativeRenderer, rightColumn });
 
 	Component appLayout = Renderer(mainContainer, [&] {
 		return hbox(
-			roomRenderer->Render() | xflex_grow,
+			narrativeRenderer->Render() | xflex_grow,
 			separator(),
 			rightColumn->Render() | size(WIDTH, EQUAL, 32)
 		);
@@ -85,6 +85,7 @@ void TextAdventureGame::ProcessSelection()
 		if (activeRoom == nullptr)
 			break;
 
+		// Areas are always allowed... Might change that later. If so: HERE!
 		//bool isAllowed = true;
 
 		//if (!isAllowed)
@@ -171,7 +172,10 @@ Element TextAdventureGame::RenderInventorySection()
 
 	if (!itemDataCollection.empty()) {
 		for (const ItemData& data : itemDataCollection)
+		{
 			content.push_back(text("- " + data.Name) | color(Color::Yellow) | italic);
+			//content.push_back(paragraph(data.Description)); // TODO: Maybe add descriptions to items? What about spacing? 
+		}
 	}
 	else {
 		content.push_back(paragraph("No items in inventory.") | dim | italic);
@@ -180,14 +184,14 @@ Element TextAdventureGame::RenderInventorySection()
 	Element inventoryWindow = window(
 		text("Inventory"),
 		vbox(std::move(content))
-	) | frame | size(HEIGHT, EQUAL, 15);
+	) | yframe | size(HEIGHT, EQUAL, 15);
 
 	return inventoryWindow;
 }
 
-Element TextAdventureGame::RenderRoomSection()
+Element TextAdventureGame::RenderNarrativeSection()
 {
-	// OLD CODE
+	// OLD CODE (Use for reference only!)
 	/* 
 	Room* activeRoom = RoomManager::ActiveRoom;
 	Area* activeArea = RoomManager::ActiveArea;
@@ -218,18 +222,35 @@ Element TextAdventureGame::RenderRoomSection()
 
 	std::vector<std::string> narrativeLog = NarrativeManager::GetLog();
 
+	// casting size_t to int to prevent huge numeral values!
+	int logSize = static_cast<int>(narrativeLog.size() - 1);
+
 	Elements content;
 
-	for (const std::string& line : narrativeLog) {
-		content.push_back(
-			text(line) | dim | italic
-		);
+	if (!narrativeLog.empty())
+	{
+		for (int i = logSize; i >= 0; i--) {
+			Decorator colorDecorator = i == logSize ? (color(Color::Yellow)) : (color(Color::Orange1) | dim);
+
+			content.push_back(
+				paragraph(narrativeLog[i]) | borderEmpty | colorDecorator
+			);
+		}
 	}
+	else {
+		content.push_back(paragraph("No actions performed yet.") | dim | italic);
+	}
+
+	//for (const std::string& line : narrativeLog) {
+	//	content.push_back(
+	//		paragraph(line) | color(ftxui::Color::Orange3) | borderLight
+	//	);
+	//}
 
 	Element narrativeWindow = window(
 		text("Narrative"),
 		vbox(std::move(content))
-	) | frame | size(HEIGHT, EQUAL, 25);
+	) | yframe | flex | size(HEIGHT, EQUAL, 25) ;
 
 	return narrativeWindow;
 }
