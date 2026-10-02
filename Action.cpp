@@ -1,5 +1,6 @@
 #include "Action.hpp"
 #include <iostream>
+#include "InventoryManager.hpp"
 
 void Action::Invoke()
 {
@@ -18,43 +19,48 @@ void Action::Invoke()
 
 bool Action::IsAllowed()
 {
-	bool isAllowed = true;
+	for (ItemKey key : requiredItems) {
+		if (key == ItemKey::Any)
+			continue;
+
+		if (!InventoryManager::ContainsItem(key))
+			return false;
+	}
 
 	for (std::shared_ptr<ActionEvent> eventPtr : events) {
 		ActionEvent* event = eventPtr.get();
-		isAllowed = (event != nullptr) && (event->IsAllowed());
 
-		if (!isAllowed)
-			break;
+		if (event == nullptr || !event->IsAllowed())
+			return false;
 	}
 
-	return isAllowed;
+	return true;
 }
 
 Action::Action(std::string name, std::vector<std::shared_ptr<ActionEvent>> events, ItemKey itemRequired)
 {
 	this->name = std::move(name);
 	this->events = std::move(events);
-	this->requiredItem.push_back(itemRequired);
+	this->requiredItems.push_back(itemRequired);
 }
 
 Action::Action(std::string name, std::shared_ptr<ActionEvent> event, ItemKey itemRequired)
 {
 	this->name = std::move(name);
 	this->events.push_back(event);
-	this->requiredItem.push_back(itemRequired);
+	this->requiredItems.push_back(itemRequired);
 }
 
 Action::Action(std::string name, std::vector<std::shared_ptr<ActionEvent>> events, std::vector<ItemKey> itemsRequired)
 {
 	this->name = std::move(name);
 	this->events = std::move(events);
-	this->requiredItem = std::move(itemsRequired);
+	this->requiredItems = std::move(itemsRequired);
 }
 
 Action::Action(std::string name, std::shared_ptr<ActionEvent> event, std::vector<ItemKey> itemsRequired)
 {
 	this->name = std::move(name);
 	this->events.push_back(event);
-	this->requiredItem = std::move(itemsRequired);
+	this->requiredItems = std::move(itemsRequired);
 }

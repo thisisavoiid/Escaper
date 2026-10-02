@@ -10,7 +10,7 @@ class Action {
 public:
 	std::string name;
 	std::vector<std::shared_ptr<ActionEvent>> events;
-	std::vector<ItemKey> requiredItem;
+	std::vector<ItemKey> requiredItems;
 
 	void Invoke();
 	bool IsAllowed();
