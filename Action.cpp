@@ -35,18 +35,26 @@ Action::Action(std::string name, std::vector<std::shared_ptr<ActionEvent>> event
 {
 	this->name = std::move(name);
 	this->events = std::move(events);
-	this->showItem = itemRequired;
+	this->requiredItem.push_back(itemRequired);
 }
 
 Action::Action(std::string name, std::shared_ptr<ActionEvent> event, ItemKey itemRequired)
 {
 	this->name = std::move(name);
 	this->events.push_back(event);
-	this->showItem = itemRequired;
+	this->requiredItem.push_back(itemRequired);
 }
 
-//Action::~Action()
-//{
-//	if (event != nullptr)
-//		delete event;
-//}
+Action::Action(std::string name, std::vector<std::shared_ptr<ActionEvent>> events, std::vector<ItemKey> itemsRequired)
+{
+	this->name = std::move(name);
+	this->events = std::move(events);
+	this->requiredItem = std::move(itemsRequired);
+}
+
+Action::Action(std::string name, std::shared_ptr<ActionEvent> event, std::vector<ItemKey> itemsRequired)
+{
+	this->name = std::move(name);
+	this->events.push_back(event);
+	this->requiredItem = std::move(itemsRequired);
+}

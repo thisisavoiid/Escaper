@@ -10,14 +10,14 @@ class Action {
 public:
 	std::string name;
 	std::vector<std::shared_ptr<ActionEvent>> events;
-	ItemKey showItem = ItemKey::Any;
+	std::vector<ItemKey> requiredItem;
 
 	void Invoke();
 	bool IsAllowed();
 
 	Action(
-		std::string name, 
-		std::vector<std::shared_ptr<ActionEvent>> events, 
+		std::string name,
+		std::vector<std::shared_ptr<ActionEvent>> events,
 		ItemKey itemRequired = ItemKey::Any
 	);
 
@@ -25,5 +25,17 @@ public:
 		std::string name,
 		std::shared_ptr<ActionEvent> event,
 		ItemKey itemRequired = ItemKey::Any
+	);
+
+	Action(
+		std::string name,
+		std::vector<std::shared_ptr<ActionEvent>> events,
+		std::vector<ItemKey> itemsRequired
+	);
+
+	Action(
+		std::string name,
+		std::shared_ptr<ActionEvent> event,
+		std::vector<ItemKey> itemsRequired
 	);
 };

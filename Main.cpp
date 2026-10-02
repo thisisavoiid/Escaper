@@ -2,7 +2,6 @@
 #include <memory>
 
 int main() {
-	TextAdventureGame* game = new TextAdventureGame();
-	game->Run();
-	delete game;
+	TextAdventureGame game = TextAdventureGame();
+	game.Run();
 }
