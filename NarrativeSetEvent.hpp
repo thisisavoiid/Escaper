@@ -8,10 +8,10 @@
 
 class NarrativeSetEvent : public ActionEvent {
 public:
-	NarrativeSetEvent(const std::vector<std::string>& lines);
-	NarrativeSetEvent(const std::string& line);
+	NarrativeSetEvent(const std::vector<std::string>& a_lines); 
+	NarrativeSetEvent(const std::string& a_line);               
 	void Invoke() override;
 	bool IsAllowed() override;
 private:
-	std::vector<std::string> lines;
+	std::vector<std::string> m_lines;        
 };

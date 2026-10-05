@@ -1,14 +1,14 @@
 #pragma once
 
-enum class ItemKey {
-	Any,
-	Glass_Shard,
-	Notebook,
-	Attic_Code,
-	Lantern,
-	Fridge_Handle,
-	Library_Key,
-	Record_01,
-	Record_02,
-	Record_03
+enum class E_ITEM_KEY {               
+	IK_ANY,                           
+	IK_GLASS_SHARD,                   
+	IK_NOTEBOOK,                      
+	IK_ATTIC_CODE,                    
+	IK_LANTERN,                       
+	IK_FRIDGE_HANDLE,                 
+	IK_LIBRARY_KEY,                   
+	IK_RECORD_01,                     
+	IK_RECORD_02,                     
+	IK_RECORD_03                      
 };

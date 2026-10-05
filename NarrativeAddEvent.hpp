@@ -8,9 +8,9 @@
 
 class NarrativeAddEvent : public ActionEvent {
 public:
-	NarrativeAddEvent(const std::string& line);
+	NarrativeAddEvent(const std::string& a_line); 
 	void Invoke() override;
 	bool IsAllowed() override;
 private:
-	std::string line;
+	std::string m_line;                        
 };

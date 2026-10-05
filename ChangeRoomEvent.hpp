@@ -6,8 +6,8 @@
 
 class ChangeRoomEvent : public ActionEvent {
 public:
-	Room* target = nullptr;
-	ChangeRoomEvent(Room* targetRoom);
+	Room* m_target = nullptr;              
+	ChangeRoomEvent(Room* a_targetRoom);   
 	void Invoke() override;
 	bool IsAllowed() override;
 };

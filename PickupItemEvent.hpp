@@ -5,11 +5,11 @@
 
 class PickupItemEvent : public ActionEvent {
 public:
-	ItemKey item;
-	PickupItemEvent(ItemKey item, bool allowMultiPickup = false);
+	E_ITEM_KEY m_item;                      
+	PickupItemEvent(E_ITEM_KEY a_item, bool a_allowMultiPickup = false); 
 	void Invoke() override;
 	bool IsAllowed() override;
 private:
-	bool multiTriggerAllowed;
-	bool hasBeenInvoked = false;
+	bool m_multiTriggerAllowed;            
+	bool m_hasBeenInvoked = false;         
 };

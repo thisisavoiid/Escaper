@@ -1,26 +1,18 @@
 #include "Room.hpp"
 
 Room::Room() {
-	this->name = "Unnamed Room";
-	this->description = "No description set!";
+	this->m_name = "Unnamed Room";              
+	this->m_description = "No description set!";
 }
 
-//Room::~Room()
-//{
-//	for (const Area& area : areas) {
-//		if (&area != nullptr)
-//			delete &area;
-//	}
-//}
-
-Room::Room(std::string roomName, std::string roomDescription, std::vector<Area> areas)
+Room::Room(std::string a_roomName, std::string a_roomDescription, std::vector<Area> a_areas)  
 {
-	this->name = std::move(roomName);
-	this->description = std::move(roomDescription);
-	this->areas = std::move(areas);
+	this->m_name = std::move(a_roomName);               
+	this->m_description = std::move(a_roomDescription); 
+	this->m_areas = std::move(a_areas);                 
 }
 
-void Room::AddArea(Area area)
+void Room::AddArea(Area a_area)                         
 {
-	this->areas.push_back(std::move(area));
+	this->m_areas.push_back(std::move(a_area));         
 }

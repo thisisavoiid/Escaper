@@ -1,12 +1,9 @@
 #include "ItemLibrary.hpp"
 
-ItemData ItemLibrary::GetDataFromKey(ItemKey key)
+ItemData ItemLibrary::GetDataFromKey(E_ITEM_KEY a_key)  
 {
     if (ItemKeyDataPairs.empty())
         return ItemData();
 
-    //if (!ItemKeyDataPairs.count(key))
-    //    return ItemData();
-
-    return ItemKeyDataPairs.at(key);
+    return ItemKeyDataPairs.at(a_key);                  
 }

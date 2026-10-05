@@ -6,8 +6,8 @@
 
 class Area {
 public:
-	std::string name;
-	std::vector<Action> actions;
+	std::string m_name;                    
+	std::vector<Action> m_actions;         
 
-	Area(std::string name, std::vector<Action> actions);
+	Area(std::string a_name, std::vector<Action> a_actions);
 };

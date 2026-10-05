@@ -7,33 +7,33 @@
 #include <memory>
 #include <iostream>
 
-Room* RoomManager::ActiveRoom = nullptr;
-Area* RoomManager::ActiveArea = nullptr;
+Room* RoomManager::m_activeRoom = nullptr;
+Area* RoomManager::m_activeArea = nullptr;
 
-std::vector<std::unique_ptr<Room>> RoomManager::rooms;
+std::vector<std::unique_ptr<Room>> RoomManager::m_rooms;
 
-void RoomManager::ChangeRoom(Room* room)
+void RoomManager::ChangeRoom(Room* a_room)
 {
-	if (room == ActiveRoom)
+	if (a_room == m_activeRoom)
 		return;
 
-	ActiveRoom = room;
-	ActiveArea = nullptr;
+	m_activeRoom = a_room;
+	m_activeArea = nullptr;
 
-	if (!room || room->areas.empty())
+	if (!a_room || a_room->m_areas.empty())
 		return;
 
-	RoomManager::ActiveArea = &room->areas.front();
+	RoomManager::m_activeArea = &a_room->m_areas.front();
 }
 
-void RoomManager::ChangeArea(Area* area)
+void RoomManager::ChangeArea(Area* a_area)
 {
-	ActiveArea = area;
+	m_activeArea = a_area;
 }
 
 std::vector<std::unique_ptr<Room>>& RoomManager::GetRooms()
 {
-	return RoomManager::rooms;
+	return RoomManager::m_rooms;
 }
 
 void RoomManager::CreateRooms()
@@ -104,7 +104,7 @@ void RoomManager::CreateRooms()
 		Action(
 			"Take the glass shard",
 			std::vector<std::shared_ptr<ActionEvent>>{
-			std::make_shared<PickupItemEvent>(ItemKey::Glass_Shard),
+			std::make_shared<PickupItemEvent>(E_ITEM_KEY::IK_GLASS_SHARD)
 				std::make_shared<NarrativeAddEvent>("You carefully pick up a sharp piece of the broken mirror. Strange reflections flicker across its surface.")
 		}
 		)
@@ -119,7 +119,7 @@ void RoomManager::CreateRooms()
 		Action(
 			"Take the notebook",
 			std::vector<std::shared_ptr<ActionEvent>>{
-			std::make_shared<PickupItemEvent>(ItemKey::Notebook),
+			std::make_shared<PickupItemEvent>(E_ITEM_KEY::IK_NOTEBOOK),
 				std::make_shared<NarrativeAddEvent>("You pick up the yellowed notebook. The hurried writing speaks of a Keeper and three lost vinyl records.")
 		}
 		)
@@ -186,7 +186,7 @@ void RoomManager::CreateRooms()
 			std::make_shared<ChangeRoomEvent>(libraryRoomRawPtr),
 				std::make_shared<NarrativeAddEvent>("The heavy door opens with a low creak. Dust hangs in the air.")
 		},
-			{ ItemKey::Library_Key }
+			{ E_ITEM_KEY::IK_LIBRARY_KEY }
 		)
 	}
 		)
@@ -202,7 +202,7 @@ void RoomManager::CreateRooms()
 			std::make_shared<ChangeRoomEvent>(atticRoomRawPtr),
 				std::make_shared<NarrativeAddEvent>("You climb the narrow stairs into the attic. Shadows cling to every corner.")
 		},
-			{ ItemKey::Attic_Code }
+			{ E_ITEM_KEY::IK_ATTIC_CODE }
 		)
 	}
 		)
@@ -264,10 +264,10 @@ void RoomManager::CreateRooms()
 		Action(
 			"Cut the towel with the glass shard",
 			std::vector<std::shared_ptr<ActionEvent>>{
-			std::make_shared<PickupItemEvent>(ItemKey::Attic_Code),
+			std::make_shared<PickupItemEvent>(E_ITEM_KEY::IK_ATTIC_CODE),
 				std::make_shared<NarrativeAddEvent>("You slice through the rotting towel. Behind it, scratched into the wall, is a sequence of numbers.")
 		},
-			{ ItemKey::Glass_Shard }
+			{ E_ITEM_KEY::IK_GLASS_SHARD }
 		)
 	}
 		)
@@ -299,11 +299,11 @@ void RoomManager::CreateRooms()
 		Action(
 			"Attach the fridge handle",
 			std::vector<std::shared_ptr<ActionEvent>>{
-			std::make_shared<ConsumeItemEvent>(ItemKey::Fridge_Handle),
-				std::make_shared<PickupItemEvent>(ItemKey::Library_Key),
+			std::make_shared<ConsumeItemEvent>(E_ITEM_KEY::IK_FRIDGE_HANDLE),
+				std::make_shared<PickupItemEvent>(E_ITEM_KEY::IK_LIBRARY_KEY),
 				std::make_shared<NarrativeAddEvent>("You attach the handle. The refrigerator door opens with a soft click. Inside lies a heavy key.")
 		},
-			{ ItemKey::Fridge_Handle }
+			{ E_ITEM_KEY::IK_FRIDGE_HANDLE }
 		)
 	}
 		)
@@ -335,7 +335,7 @@ void RoomManager::CreateRooms()
 		Action(
 			"Search the shelves",
 			std::vector<std::shared_ptr<ActionEvent>>{
-			std::make_shared<PickupItemEvent>(ItemKey::Record_01),
+			std::make_shared<PickupItemEvent>(E_ITEM_KEY::IK_RECORD_01),
 				std::make_shared<NarrativeAddEvent>("Between the yellowed books you find a dusty vinyl record. Record 1.")
 		}
 		)
@@ -369,7 +369,7 @@ void RoomManager::CreateRooms()
 		Action(
 			"Open the chest",
 			std::vector<std::shared_ptr<ActionEvent>>{
-			std::make_shared<PickupItemEvent>(ItemKey::Record_02),
+			std::make_shared<PickupItemEvent>(E_ITEM_KEY::IK_RECORD_02),
 				std::make_shared<NarrativeAddEvent>("Inside the chest lies a warm vinyl record. Record 2.")
 		}
 		)
@@ -384,7 +384,7 @@ void RoomManager::CreateRooms()
 		Action(
 			"Take the lantern",
 			std::vector<std::shared_ptr<ActionEvent>>{
-			std::make_shared<PickupItemEvent>(ItemKey::Lantern),
+			std::make_shared<PickupItemEvent>(E_ITEM_KEY::IK_LANTERN),
 				std::make_shared<NarrativeAddEvent>("You pick up the old oil lantern. Its light is weak, but better than nothing.")
 		}
 		)
@@ -418,11 +418,11 @@ void RoomManager::CreateRooms()
 		Action(
 			"Search with the lantern",
 			std::vector<std::shared_ptr<ActionEvent>>{
-			std::make_shared<PickupItemEvent>(ItemKey::Fridge_Handle),
-				std::make_shared<PickupItemEvent>(ItemKey::Record_03),
+			std::make_shared<PickupItemEvent>(E_ITEM_KEY::IK_FRIDGE_HANDLE),
+				std::make_shared<PickupItemEvent>(E_ITEM_KEY::IK_RECORD_03),
 				std::make_shared<NarrativeAddEvent>("The lantern reveals old marks on the walls. You find a broken fridge handle and a heavy vinyl record. Record 3.")
 		},
-			{ ItemKey::Lantern }
+			{ E_ITEM_KEY::IK_LANTERN }
 		)
 	}
 		)
@@ -454,12 +454,12 @@ void RoomManager::CreateRooms()
 		Action(
 			"Place the three records",
 			std::vector<std::shared_ptr<ActionEvent>>{
-			std::make_shared<ConsumeItemEvent>(ItemKey::Record_01),
-				std::make_shared<ConsumeItemEvent>(ItemKey::Record_02),
-				std::make_shared<ConsumeItemEvent>(ItemKey::Record_03),
+			std::make_shared<ConsumeItemEvent>(E_ITEM_KEY::IK_RECORD_01),
+				std::make_shared<ConsumeItemEvent>(E_ITEM_KEY::IK_RECORD_02),
+				std::make_shared<ConsumeItemEvent>(E_ITEM_KEY::IK_RECORD_03),
 				std::make_shared<NarrativeAddEvent>("You place the three records on the player. A soft crackling fills the hall. The music begins to play. The Keeper appears. He looks tired yet relieved. \"Finally,\" he whispers. \"You may leave.\" The locked doors open.")
 		},
-			{ ItemKey::Record_01, ItemKey::Record_02, ItemKey::Record_03 }
+			{ E_ITEM_KEY::IK_RECORD_01, E_ITEM_KEY::IK_RECORD_02, E_ITEM_KEY::IK_RECORD_03 }
 		)
 	}
 		)
@@ -482,12 +482,12 @@ void RoomManager::CreateRooms()
 
 #pragma endregion
 
-	rooms.push_back(std::move(suiteRoom));
-	rooms.push_back(std::move(corridorRoom));
-	rooms.push_back(std::move(bathroomRoom));
-	rooms.push_back(std::move(kitchenRoom));
-	rooms.push_back(std::move(libraryRoom));
-	rooms.push_back(std::move(atticRoom));
-	rooms.push_back(std::move(basementRoom));
-	rooms.push_back(std::move(ballroomRoom));
+	m_rooms.push_back(std::move(suiteRoom));
+	m_rooms.push_back(std::move(corridorRoom));
+	m_rooms.push_back(std::move(bathroomRoom));
+	m_rooms.push_back(std::move(kitchenRoom));
+	m_rooms.push_back(std::move(libraryRoom));
+	m_rooms.push_back(std::move(atticRoom));
+	m_rooms.push_back(std::move(basementRoom));
+	m_rooms.push_back(std::move(ballroomRoom));
 }

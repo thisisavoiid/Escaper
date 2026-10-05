@@ -1,22 +1,22 @@
 #include "PickupItemEvent.hpp"
 
-PickupItemEvent::PickupItemEvent(ItemKey item, bool allowMultiTrigger)
+PickupItemEvent::PickupItemEvent(E_ITEM_KEY a_item, bool a_allowMultiPickup) 
 {
-	this->item = item;
-	this->multiTriggerAllowed = allowMultiTrigger;
+	this->m_item = a_item;                              
+	this->m_multiTriggerAllowed = a_allowMultiPickup;   
 }
 
 void PickupItemEvent::Invoke()
 {
-	InventoryManager::AddItem(item);
+	InventoryManager::AddItem(m_item);                  
 
-	this->hasBeenInvoked = true;
+	this->m_hasBeenInvoked = true;                      
 }
 
 bool PickupItemEvent::IsAllowed()
 {
-	bool isValidItemType = this->item != ItemKey::Any; // Checks whether the item type selected is NOT ItemKey::Any (unexpected behaviour)
-	bool multiTriggerGuard = !this->multiTriggerAllowed && this->hasBeenInvoked; // Returns true if multi trigger is disabled AND event has been invoked before!
+	bool isValidItemType = this->m_item != E_ITEM_KEY::IK_ANY; 
+	bool multiTriggerGuard = !this->m_multiTriggerAllowed && this->m_hasBeenInvoked; 
 
 	return isValidItemType && !multiTriggerGuard;
 }

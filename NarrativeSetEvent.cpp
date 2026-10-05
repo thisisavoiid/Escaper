@@ -1,19 +1,19 @@
 #include "NarrativeSetEvent.hpp"
 #include "NarrativeManager.hpp"
 
-NarrativeSetEvent::NarrativeSetEvent(const std::vector<std::string>& lines)
+NarrativeSetEvent::NarrativeSetEvent(const std::vector<std::string>& a_lines)  
 {
-	this->lines = lines;
+	this->m_lines = a_lines;                    
 }
 
-NarrativeSetEvent::NarrativeSetEvent(const std::string& line)
+NarrativeSetEvent::NarrativeSetEvent(const std::string& a_line)  
 {
-	this->lines.push_back(line);
+	this->m_lines.push_back(a_line);            
 }
 
 void NarrativeSetEvent::Invoke()
 {
-	NarrativeManager::Set(this->lines);
+	NarrativeManager::Set(this->m_lines);       
 }
 
 bool NarrativeSetEvent::IsAllowed()

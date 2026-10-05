@@ -2,20 +2,20 @@
 #include "RoomManager.hpp"
 #include <iostream>
 
-ChangeRoomEvent::ChangeRoomEvent(Room* targetRoom)
+ChangeRoomEvent::ChangeRoomEvent(Room* a_targetRoom)  
 {
-	this->target = targetRoom;
+	this->m_target = a_targetRoom;          
 }
 
 void ChangeRoomEvent::Invoke()
 {
-	if (!target)
+	if (!m_target)                          
 		return;
 
-	RoomManager::ChangeRoom(target);
+	RoomManager::ChangeRoom(m_target);      
 }
 
 bool ChangeRoomEvent::IsAllowed()
 {
-	return (target != nullptr);
+	return (m_target != nullptr);           
 }

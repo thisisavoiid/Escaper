@@ -20,20 +20,20 @@ public:
 	~TextAdventureGame();
 	void Run();
 private:
-	App app = ScreenInteractive::TerminalOutput();
-	RoomManager roomManager = RoomManager();
+	App m_app = ScreenInteractive::TerminalOutput();       
+	RoomManager m_roomManager = RoomManager();             
 
-	SelectionState selectionState = SelectionState::Area;
+	E_SELECTION_STATE m_selectionState = E_SELECTION_STATE::SS_AREA;  
 
-	std::vector<std::string> options;
-	std::vector<bool> optionsAvailable;
+	std::vector<std::string> m_options;                     
+	std::vector<bool> m_optionsAvailable;                   
 
-	int selection = 0;
+	int m_selection = 0;                                    
 
 	void ProcessSelection();
 	void RefreshOptions();
 	void GoBack();
-	
+
 	Element RenderNarrativeSection();
 	Element RenderInventorySection();
 };

@@ -5,11 +5,11 @@
 
 class NarrativeManager {
 public:
-	static void Add(const std::string line);
-	static void Set(const std::vector<std::string> lines);
+	static void Add(const std::string a_line);                 
+	static void Set(const std::vector<std::string> a_lines);   
 	static void Clear();
 	static std::vector<std::string> GetLog();
 private:
-	static const int maxLines = 5;
-	static std::vector<std::string> log;
+	static const int MAX_LINES = 5;                            
+	static std::vector<std::string> m_log;                     
 };

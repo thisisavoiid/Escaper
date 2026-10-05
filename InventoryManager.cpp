@@ -2,41 +2,41 @@
 #include <vector>
 #include "ItemLibrary.hpp"
 
-std::vector<ItemKey> InventoryManager::items;
+std::vector<E_ITEM_KEY> InventoryManager::m_items;      
 
-bool InventoryManager::ContainsItem(ItemKey itemKey)
+bool InventoryManager::ContainsItem(E_ITEM_KEY a_itemKey)  
 {
-    if (items.empty())
+    if (m_items.empty())                               
         return false;
-    
-    if (std::count(items.begin(), items.end(), itemKey)) {
+
+    if (std::count(m_items.begin(), m_items.end(), a_itemKey)) { 
         return true;
     }
 
     return false;
 }
 
-void InventoryManager::AddItem(ItemKey item)
+void InventoryManager::AddItem(E_ITEM_KEY a_item)       
 {
-    items.push_back(item);
+    m_items.push_back(a_item);                          
 }
 
-void InventoryManager::RemoveItem(ItemKey itemKey)
+void InventoryManager::RemoveItem(E_ITEM_KEY a_itemKey) 
 {
-    if (items.empty())
+    if (m_items.empty())                                
         return;
 
-    if (!ContainsItem(itemKey))
+    if (!ContainsItem(a_itemKey))                       
         return;
 
-    std::erase(items, itemKey);
+    std::erase(m_items, a_itemKey);                     
 }
 
 std::vector<ItemData> InventoryManager::GetInventory()
 {
     std::vector<ItemData> itemDataCollection;
 
-    for (ItemKey itemKey : items) {
+    for (E_ITEM_KEY itemKey : m_items) {                
         ItemData itemData = ItemLibrary::GetDataFromKey(itemKey);
         itemDataCollection.push_back(itemData);
     }

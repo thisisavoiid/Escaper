@@ -11,7 +11,7 @@ TextAdventureGame::TextAdventureGame()
 
 TextAdventureGame::~TextAdventureGame()
 {
-	app.ExitLoopClosure();
+	m_app.ExitLoopClosure();
 }
 
 void TextAdventureGame::Run()
@@ -28,7 +28,7 @@ void TextAdventureGame::Run()
 
 	MenuOption menuOption;
 	menuOption.entries_option.transform = [&](EntryState state) {
-		bool available = state.index < (int)optionsAvailable.size() ? optionsAvailable[state.index] : true;
+		bool available = state.index < (int)m_optionsAvailable.size() ? m_optionsAvailable[state.index] : true;
 
 		Element e = paragraph((state.active ? "▶ " : "  ") + state.label);
 
@@ -49,8 +49,8 @@ void TextAdventureGame::Run()
 		};
 
 	Component menu = Menu(
-		&options,
-		&selection,
+		&m_options,
+		&m_selection,
 		menuOption
 	);
 
@@ -72,42 +72,36 @@ void TextAdventureGame::Run()
 		);
 		});
 
-	app.Loop(appLayout);
+	m_app.Loop(appLayout);
 }
 
 void TextAdventureGame::ProcessSelection()
 {
-	Room* activeRoom = RoomManager::ActiveRoom;
-	Area* activeArea = RoomManager::ActiveArea;
+	Room* activeRoom = RoomManager::m_activeRoom;
+	Area* activeArea = RoomManager::m_activeArea;
 
-	switch (selectionState) {
-	case SelectionState::Area:
+	switch (m_selectionState) {
+	case E_SELECTION_STATE::SS_AREA:
 		if (activeRoom == nullptr)
 			break;
 
-		// Areas are always allowed... Might change that later. If so: HERE!
-		//bool isAllowed = true;
-
-		//if (!isAllowed)
-		//	break;
-
-		RoomManager::ChangeArea(&activeRoom->areas[selection]);
-		selectionState = SelectionState::Action;
+		RoomManager::ChangeArea(&activeRoom->m_areas[m_selection]);
+		m_selectionState = E_SELECTION_STATE::SS_ACTION;
 
 		break;
 
-	case SelectionState::Action:
+	case E_SELECTION_STATE::SS_ACTION:
 		if (activeArea == nullptr)
 			break;
 
-		Action target = activeArea->actions[selection];
+		Action target = activeArea->m_actions[m_selection];
 
 		if (!target.IsAllowed())
 			break;
 
 		target.Invoke();
 
-		selectionState = SelectionState::Area;
+		m_selectionState = E_SELECTION_STATE::SS_AREA;
 
 		break;
 	}
@@ -117,35 +111,35 @@ void TextAdventureGame::ProcessSelection()
 
 void TextAdventureGame::RefreshOptions()
 {
-	Room* activeRoom = RoomManager::ActiveRoom;
-	Area* activeArea = RoomManager::ActiveArea;
+	Room* activeRoom = RoomManager::m_activeRoom;
+	Area* activeArea = RoomManager::m_activeArea;
 
-	options.clear();
-	optionsAvailable.clear();
+	m_options.clear();
+	m_optionsAvailable.clear();
 
-	selection = 0;
+	m_selection = 0;
 
-	switch (selectionState) {
-	case SelectionState::Area:
+	switch (m_selectionState) {
+	case E_SELECTION_STATE::SS_AREA:
 		if (activeRoom == nullptr)
 			break;
 
-		for (const Area& area : activeRoom->areas) {
+		for (const Area& area : activeRoom->m_areas) {
 			bool isAvailable = true;
-			options.push_back(area.name);
-			optionsAvailable.push_back(isAvailable);
+			m_options.push_back(area.m_name);
+			m_optionsAvailable.push_back(isAvailable);
 		}
 
 		break;
 
-	case SelectionState::Action:
+	case E_SELECTION_STATE::SS_ACTION:
 		if (activeArea == nullptr)
 			break;
 
-		for (Action& action : activeArea->actions) {
+		for (Action& action : activeArea->m_actions) {
 			bool isAvailable = action.IsAllowed();
-			options.push_back(action.name);
-			optionsAvailable.push_back(isAvailable);
+			m_options.push_back(action.m_name);
+			m_optionsAvailable.push_back(isAvailable);
 		}
 
 		break;
@@ -154,10 +148,10 @@ void TextAdventureGame::RefreshOptions()
 
 void TextAdventureGame::GoBack()
 {
-	switch (selectionState) {
-	case SelectionState::Action:
+	switch (m_selectionState) {
+	case E_SELECTION_STATE::SS_ACTION:
 		RoomManager::ChangeArea(nullptr);
-		selectionState = SelectionState::Area;
+		m_selectionState = E_SELECTION_STATE::SS_AREA;
 		break;
 	}
 
@@ -173,8 +167,7 @@ Element TextAdventureGame::RenderInventorySection()
 	if (!itemDataCollection.empty()) {
 		for (const ItemData& data : itemDataCollection)
 		{
-			content.push_back(text("- " + data.Name) | color(Color::Yellow) | italic);
-			//content.push_back(paragraph(data.Description)); // TODO: Maybe add descriptions to items? What about spacing? 
+			content.push_back(text("- " + data.m_name) | color(Color::Yellow) | italic);
 		}
 	}
 	else {
@@ -191,38 +184,8 @@ Element TextAdventureGame::RenderInventorySection()
 
 Element TextAdventureGame::RenderNarrativeSection()
 {
-	// OLD CODE (Use for reference only!)
-	/* 
-	Room* activeRoom = RoomManager::ActiveRoom;
-	Area* activeArea = RoomManager::ActiveArea;
-
-	Elements content;
-
-	content.push_back(paragraph(activeRoom->description) | dim | italic);
-	content.push_back(separator());
-
-	for (const Area& area : activeRoom->areas)
-	{
-		content.push_back(separator());
-		content.push_back(text(area.name) | bold);
-		for (const Action& action : area.actions) {
-			std::string actionDisplayName = "- " + action.name;
-			content.push_back(paragraph(actionDisplayName) | italic | dim);
-		}
-		content.push_back(separator());
-	}
-
-	Element roomWindow = window(
-		text(activeRoom->name) | bold,
-		vbox(std::move(content)) | frame
-	) | size(HEIGHT, EQUAL, 25);
-
-	return roomWindow;
-	*/
-
 	std::vector<std::string> narrativeLog = NarrativeManager::GetLog();
 
-	// casting size_t to int to prevent huge numeral values!
 	int logSize = static_cast<int>(narrativeLog.size() - 1);
 
 	Elements content;
@@ -241,17 +204,10 @@ Element TextAdventureGame::RenderNarrativeSection()
 		content.push_back(paragraph("No actions performed yet.") | dim | italic);
 	}
 
-	//for (const std::string& line : narrativeLog) {
-	//	content.push_back(
-	//		paragraph(line) | color(ftxui::Color::Orange3) | borderLight
-	//	);
-	//}
-
 	Element narrativeWindow = window(
 		text("Narrative"),
 		vbox(std::move(content))
-	) | yframe | flex | size(HEIGHT, EQUAL, 25) ;
+	) | yframe | flex | size(HEIGHT, EQUAL, 25);
 
 	return narrativeWindow;
 }
-

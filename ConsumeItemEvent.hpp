@@ -5,11 +5,11 @@
 
 class ConsumeItemEvent : public ActionEvent {
 public:
-	ItemKey item;
-	ConsumeItemEvent(ItemKey item, bool allowMultiTrigger=false);
+	E_ITEM_KEY m_item;                     
+	ConsumeItemEvent(E_ITEM_KEY a_item, bool a_allowMultiTrigger = false);  
 	void Invoke() override;
 	bool IsAllowed() override;
 private:
-	bool multiTriggerAllowed;
-	bool hasBeenInvoked = false;
+	bool m_multiTriggerAllowed;             
+	bool m_hasBeenInvoked = false;          
 };

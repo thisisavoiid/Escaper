@@ -1,15 +1,7 @@
 #include "Area.hpp"
 
-Area::Area(std::string name, std::vector<Action> actions)
+Area::Area(std::string a_name, std::vector<Action> a_actions)
 {
-	this->name = std::move(name);
-	this->actions = std::move(actions);
+	this->m_name = std::move(a_name);      
+	this->m_actions = std::move(a_actions);
 }
-
-//Area::~Area()
-//{
-//	for (const Action& action : actions) {
-//		if (&action != nullptr)
-//			delete &action;
-//	}
-//}

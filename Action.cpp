@@ -4,10 +4,10 @@
 
 void Action::Invoke()
 {
-	if (events.empty())
+	if (m_events.empty())                                   
 		return;
 
-	for (const std::shared_ptr<ActionEvent>& eventPtr : events) {
+	for (const std::shared_ptr<ActionEvent>& eventPtr : m_events) {  
 		ActionEvent* event = eventPtr.get();
 
 		if (event == nullptr)
@@ -19,15 +19,15 @@ void Action::Invoke()
 
 bool Action::IsAllowed()
 {
-	for (ItemKey key : requiredItems) {
-		if (key == ItemKey::Any)
+	for (E_ITEM_KEY key : m_requiredItems) {                
+		if (key == E_ITEM_KEY::IK_ANY)                      
 			continue;
 
 		if (!InventoryManager::ContainsItem(key))
 			return false;
 	}
 
-	for (std::shared_ptr<ActionEvent> eventPtr : events) {
+	for (std::shared_ptr<ActionEvent> eventPtr : m_events) {
 		ActionEvent* event = eventPtr.get();
 
 		if (event == nullptr || !event->IsAllowed())
@@ -37,30 +37,30 @@ bool Action::IsAllowed()
 	return true;
 }
 
-Action::Action(std::string name, std::vector<std::shared_ptr<ActionEvent>> events, ItemKey itemRequired)
+Action::Action(std::string a_name, std::vector<std::shared_ptr<ActionEvent>> a_events, E_ITEM_KEY a_itemRequired)  
 {
-	this->name = std::move(name);
-	this->events = std::move(events);
-	this->requiredItems.push_back(itemRequired);
+	this->m_name = std::move(a_name);                       
+	this->m_events = std::move(a_events);                   
+	this->m_requiredItems.push_back(a_itemRequired);        
 }
 
-Action::Action(std::string name, std::shared_ptr<ActionEvent> event, ItemKey itemRequired)
+Action::Action(std::string a_name, std::shared_ptr<ActionEvent> a_event, E_ITEM_KEY a_itemRequired)  
 {
-	this->name = std::move(name);
-	this->events.push_back(event);
-	this->requiredItems.push_back(itemRequired);
+	this->m_name = std::move(a_name);                       
+	this->m_events.push_back(a_event);                      
+	this->m_requiredItems.push_back(a_itemRequired);        
 }
 
-Action::Action(std::string name, std::vector<std::shared_ptr<ActionEvent>> events, std::vector<ItemKey> itemsRequired)
+Action::Action(std::string a_name, std::vector<std::shared_ptr<ActionEvent>> a_events, std::vector<E_ITEM_KEY> a_itemsRequired) 
 {
-	this->name = std::move(name);
-	this->events = std::move(events);
-	this->requiredItems = std::move(itemsRequired);
+	this->m_name = std::move(a_name);                       
+	this->m_events = std::move(a_events);                   
+	this->m_requiredItems = std::move(a_itemsRequired);     
 }
 
-Action::Action(std::string name, std::shared_ptr<ActionEvent> event, std::vector<ItemKey> itemsRequired)
+Action::Action(std::string a_name, std::shared_ptr<ActionEvent> a_event, std::vector<E_ITEM_KEY> a_itemsRequired)
 {
-	this->name = std::move(name);
-	this->events.push_back(event);
-	this->requiredItems = std::move(itemsRequired);
+	this->m_name = std::move(a_name);                       
+	this->m_events.push_back(a_event);                      
+	this->m_requiredItems = std::move(a_itemsRequired);     
 }

@@ -6,11 +6,11 @@
 
 class InventoryManager {
 public:
-	static bool ContainsItem(ItemKey itemKey);
-	static void AddItem(ItemKey itemKey);
-	static void RemoveItem(ItemKey itemKey);
+	static bool ContainsItem(E_ITEM_KEY a_itemKey);     
+	static void AddItem(E_ITEM_KEY a_itemKey);          
+	static void RemoveItem(E_ITEM_KEY a_itemKey);       
 	static std::vector<ItemData> GetInventory();
 
 private:
-	static std::vector<ItemKey> items;
+	static std::vector<E_ITEM_KEY> m_items;             
 };

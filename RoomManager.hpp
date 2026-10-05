@@ -6,13 +6,13 @@
 
 class RoomManager {
 public:
-	static Room* ActiveRoom;
-	static Area* ActiveArea;
+	static Room* m_activeRoom;              
+	static Area* m_activeArea;              
 
-	static void ChangeRoom(Room* room);
-	static void ChangeArea(Area* area);
+	static void ChangeRoom(Room* a_room);   
+	static void ChangeArea(Area* a_area);   
 	static void CreateRooms();
 	static std::vector<std::unique_ptr<Room>>& GetRooms();
 private:
-	static std::vector<std::unique_ptr<Room>> rooms;
+	static std::vector<std::unique_ptr<Room>> m_rooms; 
 };

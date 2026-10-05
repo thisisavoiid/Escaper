@@ -2,32 +2,32 @@
 #include <string>
 #include <vector>
 
-std::vector<std::string> NarrativeManager::log;
+std::vector<std::string> NarrativeManager::m_log;               
 
-void NarrativeManager::Add(const std::string line)
+void NarrativeManager::Add(const std::string a_line)            
 {
-	NarrativeManager::log.push_back(line);
+	NarrativeManager::m_log.push_back(a_line);                  
 
-	if (NarrativeManager::log.size() > NarrativeManager::maxLines) {
-		NarrativeManager::log.erase(NarrativeManager::log.begin());
+	if (NarrativeManager::m_log.size() > NarrativeManager::MAX_LINES) {  
+		NarrativeManager::m_log.erase(NarrativeManager::m_log.begin());  
 	}
 }
 
-void NarrativeManager::Set(const std::vector<std::string> lines)
+void NarrativeManager::Set(const std::vector<std::string> a_lines)  
 {
-	NarrativeManager::log.clear();
+	NarrativeManager::m_log.clear();                            
 
-	for (const std::string& line : lines) {
-		NarrativeManager::log.push_back(line);
+	for (const std::string& line : a_lines) {                   
+		NarrativeManager::m_log.push_back(line);                
 	}
 }
 
 void NarrativeManager::Clear()
 {
-	NarrativeManager::log.clear();
+	NarrativeManager::m_log.clear();                            
 }
 
 std::vector<std::string> NarrativeManager::GetLog()
 {
-	return NarrativeManager::log;
+	return NarrativeManager::m_log;                             
 }
