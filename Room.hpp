@@ -12,7 +12,7 @@ public:
 
     Room();
     Room(std::string a_roomName, std::string a_roomDescription, std::vector<Area> a_areas);  
-    void AddArea(Area a_area);        ´<
+    void AddArea(Area a_area);
 
     //~Room();
 };

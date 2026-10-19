@@ -1,7 +1,7 @@
 #include "TextAdventureGame.hpp"
 #include "ItemLibrary.hpp"
 #include "InventoryManager.hpp"
-#include "ItemData.hpp";
+#include "ItemData.hpp"
 #include "NarrativeManager.hpp"
 
 TextAdventureGame::TextAdventureGame()

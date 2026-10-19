@@ -104,7 +104,7 @@ void RoomManager::CreateRooms()
 		Action(
 			"Take the glass shard",
 			std::vector<std::shared_ptr<ActionEvent>>{
-			std::make_shared<PickupItemEvent>(E_ITEM_KEY::IK_GLASS_SHARD)
+			std::make_shared<PickupItemEvent>(E_ITEM_KEY::IK_GLASS_SHARD),
 				std::make_shared<NarrativeAddEvent>("You carefully pick up a sharp piece of the broken mirror. Strange reflections flicker across its surface.")
 		}
 		)
